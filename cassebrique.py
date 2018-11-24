@@ -1,11 +1,14 @@
 import pygame
 import time
 from random import *
+from math import *
 
 pygame.init()
 
 windowH = 800
 windowW = 500
+life = 3;
+lifeImg = pygame.image.load('img/coeurVie.png')
 touchingLowerCase = True
 balle = pygame.image.load('balles/balle1.png')
 balleW = 18
@@ -36,13 +39,13 @@ def main() :
 	dx = 0
 	while not game_over :
 		for event in pygame.event.get() :
-			if event.type == pygame.QUIT :
+			if event.type == pygame.QUIT & life == 0:
 				game_over = True
-			if estLancee() == False:
-				if event.type == pygame.KEYDOWN : 
-					vX = randint(1,7)
-					vY = randint(1,10)
-			if estLancee():
+			if estLancee(vX,vY) == False:
+				if event.type == pygame.KEYDOWN :
+					vX = randint(0,10)
+					vY = randint(0,50)
+			if estLancee(vX,vY):
 				if event.type == pygame.KEYDOWN :
 					if event.key == pygame.K_LEFT :
 						moveLeft = True
@@ -60,18 +63,20 @@ def main() :
 		window.fill(background)
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
-				
+
 		pygame.display.update()
 
 		if raquetteX - raquetteW/2 == 0:
 			dx = 1
 		if raquetteX + raquetteW/2 == 800:
-			dx = -1
-		raquetteX += dx
-		balleY += vY
-		balleX += vX
-		if isOver(balleY) :
-			game_over = True
+            dx = -1
+        raquetteX += dx
+        balleY += vY
+        balleX += vX
+        if isOver(balleY) :
+            life = life - 1
+
+
 
 def displayRaquette(x,y) :
 	img = raquette
@@ -83,7 +88,7 @@ def displayRaquette(x,y) :
 def displayBalle(x,y) :
 	window.blit(balle,(x,y))
 
-def isOver(by) : 
+def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
 
