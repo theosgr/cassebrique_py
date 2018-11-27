@@ -47,7 +47,6 @@ def main() :
 	life = 3
 	while not game_over :
 		for event in pygame.event.get() :
-<<<<<<< Updated upstream
 			if event.type == pygame.QUIT:
 				game_over = True
 			if estLancee(vX,vY) == False:
@@ -58,14 +57,6 @@ def main() :
 					if event.key == pygame.K_RIGHT :
 						vX = 1
 						vY = -1
-=======
-			if event.type == pygame.QUIT & life == 0:
-				game_over = True
-			if estLancee(vX,vY) == False:
-				if event.type == pygame.KEYDOWN :
-					vX = randint(0,10)
-					vY = randint(0,50)
->>>>>>> Stashed changes
 			if estLancee(vX,vY):
 				if event.type == pygame.KEYDOWN :
 					if event.key == pygame.K_LEFT :
@@ -84,7 +75,6 @@ def main() :
 		window.fill(background)
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
-<<<<<<< Updated upstream
 		displayLifes(40,0,life)
 
 		pygame.draw.rect(window,black ,[100,50,50,15])
@@ -126,15 +116,12 @@ def main() :
 		pygame.draw.rect(window,black ,[340,130,50,15])
 		pygame.draw.rect(window,black ,[340,150,50,15])
 		pygame.draw.rect(window,black ,[340,170,50,15])
-=======
->>>>>>> Stashed changes
 
 		pygame.display.update()
 
 		if raquetteX - raquetteW/2 == 0:
 			dx = 1
 		if raquetteX + raquetteW/2 == 800:
-<<<<<<< Updated upstream
 			dx = -1
 		raquetteX += dx
 
@@ -163,15 +150,6 @@ def main() :
 
 	if playAgain() :
 		main()
-=======
-            dx = -1
-        balleY += vY
-        balleX += vX
-        if isOver(balleY) :
-            life = life - 1
-
-
->>>>>>> Stashed changes
 
 def displayRaquette(x,y) :
 	img = raquette
