@@ -24,6 +24,8 @@ white = (255,255,255)
 font = pygame.font.SysFont('BradBunR.ttf', 16)
 window = pygame.display.set_mode((windowH,windowW))
 pygame.display.set_caption("Casse-Brique")
+windowAccueil = pygame.display.set_mode((windowH,windowW))
+backgroundAcc = pygame.image.load('img/degradeGris.jpg').convert()
 
 
 
@@ -135,7 +137,7 @@ def main() :
 				vX = -vX
 			if balleY <= 0:
 				vY = -vY
-			if balleY == 470-24 & balleX <= 400 + dx & balleX >= 400 - dx :  # A modifier
+			if balleY == 470-24 & balleX <= 400 + dx & balleX >= 400 - dx :  # A modifier pas bon
 				vY = -vY
 
 			balleX += vX
@@ -189,6 +191,29 @@ def playAgain() :
 				return True
 		horloge.tick()
 
+def accueil() :
+	continuer = True
+	while continuer:
+		windowAccueil.blit(backgroundAcc,(0,0))
+		pygame.display.flip()
+		continuer_jeu = True
+		continuer_accueil = True
+
+		while continuer_accueil:
+			pygame.time.Clock().tick(30)
+
+		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				if event.key == K_SPACE:
+					continuer_accueil = False
+					continuer_jeu = False
+					continuer = False
+			elif event.type == pygame.KEYDOWN:
+				if event.key == K_F1:
+					continuer_accueil = False
+
+
+accueil()
 main()
 pygame.quit()
 quit()
