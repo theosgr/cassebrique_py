@@ -45,6 +45,7 @@ def main() :
 	rectW = 0
 	rectH = 0
 	life = 3
+
 	while not game_over :
 		for event in pygame.event.get() :
 			if event.type == pygame.QUIT:
@@ -119,6 +120,7 @@ def main() :
 
 		pygame.display.update()
 
+        #Raquette revient quand elle touche les bords
 		if raquetteX - raquetteW/2 == 0:
 			dx = 1
 		if raquetteX + raquetteW/2 == 800:
@@ -133,8 +135,8 @@ def main() :
 				vX = -vX
 			if balleY <= 0:
 				vY = -vY
-			#if balleY == raquetteY & raquetteX + dx<= balleX <= raquetteX - dx : # A modifier
-			#	vY = -vY
+			if balleY == 470-24 & balleX <= 400 + dx & balleX >= 400 - dx :  # A modifier
+				vY = -vY
 
 			balleX += vX
 			balleY += vY
