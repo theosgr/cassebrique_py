@@ -147,9 +147,11 @@ def main() :
 
 
 		if isOver(balleY) :
-			life = life - 1
-			if life == -1 :
-				game_over = True
+				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2,windowH/2)
+				life = life - 1
+				displayLifes(40,0,life)
+				if life == -1 :
+					game_over = True
 
 
 	if playAgain() :
@@ -176,10 +178,16 @@ def estLancee(vvX,vvY) :
 		return False
 
 def displayLifes(x,y,life) :
-	vie = font.render("Vies restantes: " + str(life), False, black, white)
+	vie = font.render("Vies restantes: " + str(life), True, black, white)
 	window.blit(vie,(x,y))
 
-
+def displayMessage(text, fontSize, x, y) :
+	font = pygame.font.Font('BradBunR.ttf', fontSize)
+	img = font.render(text, True, white)
+	displayRect = img.get_rect()
+	displayRect.center=(x,y)
+	window.blit(img,displayRect)
+	pygame.display.update()
 
 def playAgain() :
 	time.sleep(2)
@@ -194,26 +202,22 @@ def playAgain() :
 def accueil() :
 	continuer = True
 	while continuer:
+		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+50,windowH/2)
 		windowAccueil.blit(backgroundAcc,(0,0))
 		pygame.display.flip()
-		continuer_jeu = True
-		continuer_accueil = True
 
-		while continuer_accueil:
-			pygame.time.Clock().tick(30)
 
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
-				if event.key == K_SPACE:
-					continuer_accueil = False
-					continuer_jeu = False
-					continuer = False
+				if event.key == pygame.K_SPACE:
+					main()
 			elif event.type == pygame.KEYDOWN:
-				if event.key == K_F1:
-					continuer_accueil = False
+				if event.key == pygame.K_ESCAPE:
+					continuer = False
+					pygame.quit()
+					quit()
 
 
 accueil()
-main()
 pygame.quit()
 quit()
