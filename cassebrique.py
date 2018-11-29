@@ -152,7 +152,7 @@ def main() :
 				life = life - 1
 				if life == -1 :
 					game_over = True
-		
+
 
 
 	if playAgain() :
@@ -160,7 +160,7 @@ def main() :
 
 def displayRaquette(x,y) :
 	img = raquette
-	displayRect = img.get_rect()
+	displayRect = img.get_rect()!
 	displayRect.center = (x,y)
 	window.blit(img,displayRect)
 	pygame.display.update()
