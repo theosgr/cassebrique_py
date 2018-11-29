@@ -8,12 +8,12 @@ pygame.init()
 horloge = pygame.time.Clock()
 windowH = 800
 windowW = 500
-life = 3;
 lifeImg = pygame.image.load('img/coeurVie.png')
 touchingLowerCase = True
 balle = pygame.image.load('balles/balle1.png')
 balleW = 18
 balleH = 16
+life = 3
 raquette = pygame.image.load('raquette/raquette.png')
 raquetteW = 204
 raquetteH = 24
@@ -46,7 +46,8 @@ def main() :
 	rectY = 0
 	rectW = 0
 	rectH = 0
-	life = 3
+
+	
 
 	while not game_over :
 		for event in pygame.event.get() :
@@ -147,11 +148,11 @@ def main() :
 
 
 		if isOver(balleY) :
-				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2,windowH/2)
+				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2+150,windowH/2)
 				life = life - 1
-				displayLifes(40,0,life)
 				if life == -1 :
 					game_over = True
+		
 
 
 	if playAgain() :
@@ -165,8 +166,8 @@ def displayRaquette(x,y) :
 	pygame.display.update()
 
 def displayBalle(x,y) :
-	window.blit(balle,(x,y))
 
+	window.blit(balle,(x,y))
 def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
@@ -202,7 +203,6 @@ def playAgain() :
 def accueil() :
 	continuer = True
 	while continuer:
-		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+50,windowH/2)
 		windowAccueil.blit(backgroundAcc,(0,0))
 		pygame.display.flip()
 
@@ -214,9 +214,10 @@ def accueil() :
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					continuer = False
-					pygame.quit()
-					quit()
+					game_over = True
 
+		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH/2)
+		pygame.display.update()
 
 accueil()
 pygame.quit()
