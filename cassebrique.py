@@ -143,9 +143,13 @@ def main() :
 			if balleY <= 0:
 				vY = -vY
 			#La balle touche la raquette
-			if balleY > 468 - raquetteH and balleX > raquetteX - raquetteW/2 and balleX < raquetteX + raquetteW/2 :
+			if balleY == 468 - raquetteH and balleX > raquetteX - raquetteW/2 and balleX < raquetteX + raquetteW/2 :
 				vY = -vY
 
+                        #La balle touche le bas ou le haut d'une brique
+
+			#La balle touche le cote d'une brique
+                        
 			balleX += vX
 			balleY += vY
 
