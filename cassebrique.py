@@ -52,7 +52,8 @@ def main() :
 	while not game_over :
 		for event in pygame.event.get() :
 			if event.type == pygame.QUIT:
-				game_over = True
+				#game_over = True
+				quit()
 			if estLancee(vX,vY) == False:
 				if event.type == pygame.KEYDOWN :
 					if event.key == pygame.K_LEFT :
@@ -77,10 +78,7 @@ def main() :
 
 
 		window.fill(background)
-		displayBalle(balleX, balleY)
-		displayRaquette(raquetteX,raquetteY)
-		displayLifes(40,0,life)
-
+		
 		pygame.draw.rect(window,black ,[100,50,50,15])
 		pygame.draw.rect(window,black ,[100,70,50,15])
 		pygame.draw.rect(window,black ,[100,90,50,15])
@@ -120,6 +118,12 @@ def main() :
 		pygame.draw.rect(window,black ,[340,130,50,15])
 		pygame.draw.rect(window,black ,[340,150,50,15])
 		pygame.draw.rect(window,black ,[340,170,50,15])
+		
+		displayBalle(balleX, balleY)
+		displayRaquette(raquetteX,raquetteY)
+		#displayLifes(40,0,life)
+
+		
 
 		pygame.display.update()
 
@@ -148,8 +152,22 @@ def main() :
 
 
 		if isOver(balleY) :
+                        continuer = True
+                        while continuer:
+                        	for event in pygame.event.get():
+                                        if event.type == pygame.QUIT:
+                                                #game_over = True
+                                                quit()
+                                	if event.type == pygame.KEYDOWN:
+                                                if event.key == pygame.K_SPACE:
+                                                        main()
+                                                elif event.type == pygame.KEYDOWN:
+                                                	if event.key == pygame.K_ESCAPE:
+                                                        	continuer = False
+                                                                game_over = True
+                                                                
 				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2+150,windowH/2)
-				life = life - 1
+				life += -1
 				if life == -1 :
 					game_over = True
 
@@ -160,14 +178,14 @@ def main() :
 
 def displayRaquette(x,y) :
 	img = raquette
-	displayRect = img.get_rect()!
+	displayRect = img.get_rect()
 	displayRect.center = (x,y)
 	window.blit(img,displayRect)
 	pygame.display.update()
 
 def displayBalle(x,y) :
-
 	window.blit(balle,(x,y))
+
 def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
@@ -179,7 +197,7 @@ def estLancee(vvX,vvY) :
 		return False
 
 def displayLifes(x,y,life) :
-	vie = font.render("Vies restantes: " + str(life), True, black, white)
+	vie = font.render("Vies restantes : " + str(life), True, black, white)
 	window.blit(vie,(x,y))
 
 def displayMessage(text, fontSize, x, y) :
@@ -208,6 +226,9 @@ def accueil() :
 
 
 		for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+				#game_over = True
+				quit()
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					main()
