@@ -13,7 +13,7 @@ touchingLowerCase = True
 balle = pygame.image.load('balles/balle1.png')
 balleW = 18
 balleH = 16
-life = 3
+life = 0
 raquette = pygame.image.load('raquette/raquette.png')
 raquetteW = 204
 raquetteH = 24
@@ -46,8 +46,7 @@ def main() :
 	rectY = 0
 	rectW = 0
 	rectH = 0
-
-	
+        global life
 
 	while not game_over :
 		for event in pygame.event.get() :
@@ -78,6 +77,8 @@ def main() :
 
 
 		window.fill(background)
+
+		displayLifes(40,0,life)
 		
 		pygame.draw.rect(window,black ,[100,50,50,15])
 		pygame.draw.rect(window,black ,[100,70,50,15])
@@ -121,7 +122,6 @@ def main() :
 		
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
-		#displayLifes(40,0,life)
 
 		
 
@@ -153,6 +153,7 @@ def main() :
 
 		if isOver(balleY) :
                         continuer = True
+                        perdUneVie()
                         while continuer:
                         	for event in pygame.event.get():
                                         if event.type == pygame.QUIT:
@@ -167,14 +168,18 @@ def main() :
                                                                 game_over = True
                                                                 
 				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2+150,windowH/2)
-				life += -1
-				if life == -1 :
-					game_over = True
 
 
 
 	if playAgain() :
 		main()
+
+def perdUneVie() :
+        global life
+        life = life - 1
+        if life < 0 :
+                accueil()
+
 
 def displayRaquette(x,y) :
 	img = raquette
@@ -220,10 +225,14 @@ def playAgain() :
 
 def accueil() :
 	continuer = True
+	global life
+	life = 2
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
+		displayLifes(40,0,life)
+		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH/2)
 		pygame.display.flip()
-
+		pygame.display.update()
 
 		for event in pygame.event.get():
                         if event.type == pygame.QUIT:
@@ -237,8 +246,6 @@ def accueil() :
 					continuer = False
 					game_over = True
 
-		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH/2)
-		pygame.display.update()
 
 accueil()
 pygame.quit()
