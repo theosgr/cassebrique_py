@@ -127,7 +127,7 @@ def main() :
 
 		pygame.display.update()
 
-        #Raquette revient quand elle touche les bords
+                #Raquette revient quand elle touche les bords
 		if raquetteX - raquetteW/2 == 0:
 			dx = 1
 		if raquetteX + raquetteW/2 == 800:
@@ -135,14 +135,15 @@ def main() :
 		raquetteX += dx
 
 		if estLancee(vX,vY) :
-
+                        #La balle touche les bords
 			if balleX <= 0:
 				vX = -vX
 			if balleX >= 790:
 				vX = -vX
 			if balleY <= 0:
 				vY = -vY
-			if balleY == 470-24 & balleX <= 400 + dx & balleX >= 400 - dx :  # A modifier pas bon
+			#La balle touche la raquette
+			if balleY > 468 - raquetteH and balleX > raquetteX - raquetteW/2 and balleX < raquetteX + raquetteW/2 :
 				vY = -vY
 
 			balleX += vX
@@ -167,7 +168,7 @@ def main() :
                                                         	continuer = False
                                                                 game_over = True
                                                                 
-				displayMessage("Vous perdez une vie, appuyez sur une touche pour continuer", 30, windowW/2+150,windowH/2)
+				displayMessage("Vous perdez une vie, appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
 
 
 
