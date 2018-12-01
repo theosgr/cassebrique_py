@@ -217,11 +217,8 @@ def playAgain() :
 
 #fonction permettant d'afficher les briques
 def displayBriques(x,y) :
-<<<<<<< HEAD
+
 	tmp = pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
-=======
-	tmp = pygame.draw.rect(window,black,[x,y,50,15])
->>>>>>> master
 	img = brique
 	displayRect = img.get_rect()
 	displayRect.center = (x,y)
@@ -232,13 +229,8 @@ def displayBriques(x,y) :
 			for k in range(1,70,1):
 				briques[k] = tmp
 				k += 1
-<<<<<<< HEAD
 			tmp = pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
 			pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
-=======
-			tmp = pygame.draw.rect(window,black,[x,y,50,15])
-			pygame.draw.rect(window,black,[x,y,50,15])
->>>>>>> master
 			y = y + 20
 			j+=1
 		x = x + 60
