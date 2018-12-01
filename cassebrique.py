@@ -115,8 +115,8 @@ def main() :
 				vY = -vY
 
             #La balle touche le bas ou le haut d'une brique
-            if balleY == 
-            	vY = -vY
+            #f balleY == 
+            #vY = -vY
 			#La balle touche le cote d'une brique
 
 			balleX += vX
@@ -245,8 +245,9 @@ def accueil() :
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
 		displayLifes(40,0,life)
-		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-550)
-		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-480)
+		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-600)
+		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-530)
+		displayMessage("[<-] pour déplacer la raquette à gauche et [->] pour la déplacer à droite",25,windowW/2+150,windowH-350)
 		pygame.display.flip()
 		pygame.display.update()
 
