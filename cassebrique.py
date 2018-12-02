@@ -55,7 +55,7 @@ def main() :
 	moveRight = False
 	dx = 0
 	#global life | je ne pense pas que le global ici soit necessaire
-
+        
 	while not game_over :
 		for event in pygame.event.get() :
 			if event.type == pygame.QUIT:
@@ -115,13 +115,23 @@ def main() :
 				vY = -vY
 
                         #La balle touche une brique
+			numeroBrique = 0
                         for i in lesBriques :
-                                if balleX > i[0]-briqueW/2 and balleX < i[0] + briqueW/2 and balleY > i[1]-briqueH/2 and balleY < i[1]+briqueH/2 :
+                                print(numeroBrique)
+                                if balleX-balleH/2 > i[0]-briqueW/2 and balleX+balleH/2 < i[0] + briqueW/2 and (balleY+balleH/2 == i[1]+briqueH/2 or balleY-balleH/2 == i[1]-briqueH/2) :
+                                #balleY > i[1]-briqueH/2 and balleY < i[1]+briqueH/2 :
                                         vY = -vY
-                                        i[0] = 1000
+                                        del lesBriques[numeroBrique]
+                                        print(numeroBrique)
+                                if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
+                                        vX = -vX
+                                        del lesBriques[numeroBrique]
+                                        print(numeroBrique)
+                                numeroBrique = numeroBrique + 1
 
 			balleX += vX
 			balleY += vY
+
 
 
 
@@ -227,8 +237,9 @@ def accueil() :
 	global life
 	life = 2
 	global lesBriques
+	lesBriques = []
 	listei = (40,60,80,100)
-	listej = (40,100,160,220)
+	listej = (40,95,150,205)
 	for i in listei:
                 for j in listej:
                         lesBriques.append([j,i])
