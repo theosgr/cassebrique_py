@@ -116,7 +116,7 @@ def main() :
                         #La balle touche une brique
 			numeroBrique = 0
 			for i in lesBriques :
-				if balleX-balleH/2 > i[0]-briqueW/2 and balleX+balleH/2 < i[0] + briqueW/2 and (balleY+balleH/2 == i[1]+briqueH/2 or balleY-balleH/2 == i[1]-briqueH/2) :
+				if balleX-balleW/2 > i[0]-briqueW/2 and balleX+balleW/2 < i[0] + briqueW/2 and (balleY-balleH/2 == i[1]+briqueH/2 or balleY+balleH/2 == i[1]-briqueH/2) :
 					vY = -vY
 					del lesBriques[numeroBrique]
 				if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
