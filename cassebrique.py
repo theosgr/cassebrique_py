@@ -34,8 +34,9 @@ window = pygame.display.set_mode((windowH,windowW))
 pygame.display.set_caption("Casse-Brique")
 windowAccueil = pygame.display.set_mode((windowH,windowW))
 backgroundAcc = pygame.image.load('img/degradeGris.jpg').convert()
-
-# Coordonnées première brique = 100,50,50,15
+lesBriques = []
+CoordBrique = []
+# Coordonnees premiere brique = 100,50,50,15
 # (x,y,width, height)
 
 # Fonction main pour le fonctionnement du jeu
@@ -44,7 +45,7 @@ def main() :
 	raquetteY = 470
 	vX = 0
 	vY = 0
-	briqueX = 100 #Position de départ d'une brique qu'on implémente après dans une boucle pour toutes les afficher
+	briqueX = 100 #Position de depart d'une brique qu'on implemente apres dans une boucle pour toutes les afficher
 	briqueY = 50
 	angle = 0
 	balleX = 392
@@ -53,7 +54,7 @@ def main() :
 	moveLeft = False
 	moveRight = False
 	dx = 0
-	#global life | je ne pense pas que le global ici soit nécessaire
+	#global life | je ne pense pas que le global ici soit necessaire
 
 	while not game_over :
 		for event in pygame.event.get() :
@@ -84,12 +85,11 @@ def main() :
 
 
 		window.fill(background)
-
+                displayBriques()
 		displayLifes(40,0,life)
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
-		# affichage des briques 4 x 6
-		displayBriques(briqueX, briqueY)
+		
 
 
 
@@ -149,7 +149,7 @@ def main() :
 	if playAgain() :
 		main()
 
-# Fonction qui fait perdre une vie à un joueur, return accueil() si il n'a plus de vie
+# Fonction qui fait perdre une vie a un joueur, return accueil() si il n a plus de vie
 def perdUneVie() :
         global life
         life = life - 1
@@ -168,12 +168,12 @@ def displayRaquette(x,y) :
 def displayBalle(x,y) :
 	window.blit(balle,(x,y))
 
-#fonction déterminant si la balle touche le bord bas de l'écran 
+#fonction determinant si la balle touche le bord bas de l'ecran 
 def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
 
-#fonction déterminant si la balle est lancée ou non
+#fonction determinant si la balle est lancee ou non
 def estLancee(vvX,vvY) :
 	if vvX != 0 or vvY != 0 :
 		return True
@@ -186,7 +186,6 @@ def displayLifes(x,y,life) :
 	window.blit(vie,(x,y))
 
 #fonction affichant un message
-
 def displayMessage(text, fontSize, x, y) :
 	font = pygame.font.Font('BradBunR.ttf', fontSize)
 	img = font.render(text, True, white)
@@ -197,7 +196,7 @@ def displayMessage(text, fontSize, x, y) :
 
 #deuxieme fonction affichant un message
 def displayTitleMessage(text, fontSize, x, y) :
-	font = pygame.font.Font('CHLORINR.ttf', fontSize)
+	font = pygame.font.Font('BradBunR.ttf', fontSize)
 	img = font.render(text, True, white)
 	displayRect = img.get_rect()
 	displayRect.center=(x,y)
@@ -216,25 +215,9 @@ def playAgain() :
 		horloge.tick()
 
 #fonction permettant d'afficher les briques
-def displayBriques(x,y) :
-
-	tmp = pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
-	img = brique
-	displayRect = img.get_rect()
-	displayRect.center = (x,y)
-	window.blit(img,displayRect)
-	pygame.display.update()
-	for i in range(1,10,1):
-		for j in range(1,7,1):
-			for k in range(1,70,1):
-				briques[k] = tmp
-				k += 1
-			tmp = pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
-			pygame.draw.rect(window,black,[x,y,briqueW,briqueH])
-			y = y + 20
-			j+=1
-		x = x + 60
-		i+=1
+def displayBriques() :
+        for i in lesBriques :
+                pygame.draw.rect(window,black,[i[0],i[1],briqueW,briqueH])
 		
 
 #fonction contenant les composants de la page d'accueil du jeu
@@ -242,12 +225,19 @@ def accueil() :
 	continuer = True
 	global life
 	life = 2
+	global lesBriques
+	listei = (40,60,80,100)
+	listej = (40,100,160,220)
+	for i in listei:
+                for j in listej:
+                        lesBriques.append([j,i])
+
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
 		displayLifes(40,0,life)
 		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-600)
 		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-530)
-		displayMessage("[<-] pour déplacer la raquette à gauche et [->] pour la déplacer à droite",25,windowW/2+150,windowH-350)
+		displayMessage("[<-] pour deplacer la raquette a gauche et [->] pour la deplacer a droite",25,windowW/2+150,windowH-350)
 		pygame.display.flip()
 		pygame.display.update()
 
