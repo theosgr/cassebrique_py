@@ -22,8 +22,8 @@ raquetteW = 204
 raquetteH = 24
 estLancee = False
 brique = pygame.image.load('briques/brique6.png')
-briqueW = 50
-briqueH = 15
+briqueW = 70
+briqueH = 30
 briques = []
 background = (113,177,227)
 black = (0,0,0)
@@ -117,16 +117,12 @@ def main() :
                         #La balle touche une brique
 			numeroBrique = 0
                         for i in lesBriques :
-                                print(numeroBrique)
                                 if balleX-balleH/2 > i[0]-briqueW/2 and balleX+balleH/2 < i[0] + briqueW/2 and (balleY+balleH/2 == i[1]+briqueH/2 or balleY-balleH/2 == i[1]-briqueH/2) :
-                                #balleY > i[1]-briqueH/2 and balleY < i[1]+briqueH/2 :
                                         vY = -vY
                                         del lesBriques[numeroBrique]
-                                        print(numeroBrique)
                                 if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
                                         vX = -vX
                                         del lesBriques[numeroBrique]
-                                        print(numeroBrique)
                                 numeroBrique = numeroBrique + 1
 
 			balleX += vX
@@ -153,6 +149,21 @@ def main() :
                         				continuer = False
                         				game_over = True
 
+                if win() :
+                        continuer = True
+                        displayMessage("Vous avez gagne !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
+                        while continuer:
+                        	for event in pygame.event.get():
+                        		if event.type == pygame.QUIT:
+                        			#game_over = True
+                        			quit()
+                        		if event.type == pygame.KEYDOWN:
+                        			if event.key == pygame.K_SPACE:
+                        				accueil()
+                        		elif event.type == pygame.KEYDOWN:
+                        			if event.key == pygame.K_ESCAPE:
+                        				continuer = False
+                        				game_over = True
                         
 
 
@@ -183,7 +194,12 @@ def displayBalle(x,y) :
 def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
-
+#fonction qui determine si c'est gagne
+def win() :
+        if len(lesBriques) == 0 :
+                return True
+        else :
+                return False
 #fonction determinant si la balle est lancee ou non
 def estLancee(vvX,vvY) :
 	if vvX != 0 or vvY != 0 :
@@ -238,8 +254,8 @@ def accueil() :
 	life = 2
 	global lesBriques
 	lesBriques = []
-	listei = (40,60,80,100)
-	listej = (40,95,150,205)
+	listei = (40,75,110,145)
+	listej = (40,115,190,265)
 	for i in listei:
                 for j in listej:
                         lesBriques.append([j,i])
