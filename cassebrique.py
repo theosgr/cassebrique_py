@@ -36,8 +36,7 @@ windowAccueil = pygame.display.set_mode((windowH,windowW))
 backgroundAcc = pygame.image.load('img/degradeGris.jpg').convert()
 lesBriques = []
 CoordBrique = []
-# Coordonnees premiere brique = 100,50,50,15
-# (x,y,width, height)
+
 
 # Fonction main pour le fonctionnement du jeu
 def main() :
@@ -85,7 +84,7 @@ def main() :
 
 
 		window.fill(background)
-                displayBriques()
+		displayBriques()
 		displayLifes(40,0,life)
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
@@ -116,14 +115,14 @@ def main() :
 
                         #La balle touche une brique
 			numeroBrique = 0
-                        for i in lesBriques :
-                                if balleX-balleH/2 > i[0]-briqueW/2 and balleX+balleH/2 < i[0] + briqueW/2 and (balleY+balleH/2 == i[1]+briqueH/2 or balleY-balleH/2 == i[1]-briqueH/2) :
-                                        vY = -vY
-                                        del lesBriques[numeroBrique]
-                                if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
-                                        vX = -vX
-                                        del lesBriques[numeroBrique]
-                                numeroBrique = numeroBrique + 1
+			for i in lesBriques :
+				if balleX-balleH/2 > i[0]-briqueW/2 and balleX+balleH/2 < i[0] + briqueW/2 and (balleY+balleH/2 == i[1]+briqueH/2 or balleY-balleH/2 == i[1]-briqueH/2) :
+					vY = -vY
+					del lesBriques[numeroBrique]
+				if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
+					vX = -vX
+					del lesBriques[numeroBrique]
+				numeroBrique = numeroBrique + 1
 
 			balleX += vX
 			balleY += vY
@@ -133,39 +132,36 @@ def main() :
 
 
 		if isOver(balleY) :
-                        continuer = True
-                        perdUneVie()
-                        displayMessage("Vous perdez une vie, appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
-                        while continuer:
-                        	for event in pygame.event.get():
-                        		if event.type == pygame.QUIT:
-                        			#game_over = True
-                        			quit()
-                        		if event.type == pygame.KEYDOWN:
-                        			if event.key == pygame.K_SPACE:
-                        				main()
-                        		elif event.type == pygame.KEYDOWN:
-                        			if event.key == pygame.K_ESCAPE:
-                        				continuer = False
-                        				game_over = True
-
-                if win() :
-                        continuer = True
-                        displayMessage("Vous avez gagne !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
-                        while continuer:
-                        	for event in pygame.event.get():
-                        		if event.type == pygame.QUIT:
-                        			#game_over = True
-                        			quit()
-                        		if event.type == pygame.KEYDOWN:
-                        			if event.key == pygame.K_SPACE:
-                        				accueil()
-                        		elif event.type == pygame.KEYDOWN:
-                        			if event.key == pygame.K_ESCAPE:
-                        				continuer = False
-                        				game_over = True
-                        
-
+			continuer = True
+			perdUneVie()
+			displayMessage("Vous perdez une vie, appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
+			while continuer:
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						#game_over = True
+						quit()
+					if event.type == pygame.KEYDOWN:
+						if event.key == pygame.K_SPACE:
+							main()
+						elif event.type == pygame.KEYDOWN:
+							if event.key == pygame.K_ESCAPE:
+								continuer = False
+								game_over = True
+		if win() :
+			continuer = True
+			displayMessage("Vous avez gagné !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
+			while continuer:
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						#game_over = True
+						quit()
+					if event.type == pygame.KEYDOWN:
+						if event.key == pygame.K_SPACE:
+							accueil()
+					elif event.type == pygame.KEYDOWN:
+						if event.key == pygame.K_ESCAPE:
+							continuer = False
+							game_over = True
 
 
 	if playAgain() :
@@ -196,10 +192,10 @@ def isOver(by) :
 	return touchingLowerCase
 #fonction qui determine si c'est gagne
 def win() :
-        if len(lesBriques) == 0 :
-                return True
-        else :
-                return False
+	if len(lesBriques) == 0 :
+		return True
+	else :
+		return False
 #fonction determinant si la balle est lancee ou non
 def estLancee(vvX,vvY) :
 	if vvX != 0 or vvY != 0 :
@@ -216,6 +212,14 @@ def displayLifes(x,y,life) :
 def displayMessage(text, fontSize, x, y) :
 	font = pygame.font.Font('BradBunR.ttf', fontSize)
 	img = font.render(text, True, white)
+	displayRect = img.get_rect()
+	displayRect.center=(x,y)
+	window.blit(img,displayRect)
+	pygame.display.update()
+#couleur noir
+def displayMessageDeux(text, fontSize, x, y) :
+	font = pygame.font.Font('BradBunR.ttf', fontSize)
+	img = font.render(text, True, black)
 	displayRect = img.get_rect()
 	displayRect.center=(x,y)
 	window.blit(img,displayRect)
@@ -262,8 +266,8 @@ def accueil() :
 
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
-		displayLifes(40,0,life)
 		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-600)
+		displayMessageDeux("Jeu développé par PEDICONE Doucelin - GROLLIER Théo - BEN MOUSSA Aurian", 20, windowW/2+150, windowH-770)
 		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-530)
 		displayMessage("[<-] pour deplacer la raquette a gauche et [->] pour la deplacer a droite",25,windowW/2+150,windowH-350)
 		pygame.display.flip()
