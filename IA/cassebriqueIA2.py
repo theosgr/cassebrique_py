@@ -68,11 +68,11 @@ def main() :
 					if event.key == pygame.K_RIGHT :
 						vX = 1
 						vY = -1
-
-                if balleX >= raquetteX :
-                        dx = 1
-                if balleX <= raquetteX :
-                        dx = -1
+                if estLancee(vX,vY) == True:
+                        if balleX > raquetteX+raquetteW/2 :
+                                dx = 1
+                        if balleX < raquetteX-raquetteW/2 :
+                                dx = -1
 		window.fill(background)
 		displayBriques()
 		displayLifes(40,0,life)
@@ -100,7 +100,7 @@ def main() :
 			if balleY <= 0:
 				vY = -vY
 			#La balle touche la raquette
-			if balleY == 468 - raquetteH and balleX > raquetteX - raquetteW/2 and balleX < raquetteX + raquetteW/2 :
+			if balleY == 468 - raquetteH and balleX >= raquetteX - raquetteW/2 and balleX <= raquetteX + raquetteW/2 :
 				vY = -vY
 
                         #La balle touche une brique

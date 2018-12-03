@@ -68,21 +68,11 @@ def main() :
 					if event.key == pygame.K_RIGHT :
 						vX = 1
 						vY = -1
-			if estLancee(vX,vY):
-				if event.type == pygame.KEYDOWN :
-					if event.key == pygame.K_LEFT :
-						moveLeft = True
-						dx = -1
-					if event.key == pygame.K_RIGHT :
-						moveRight = True
-						dx = 1
-				elif event.type == pygame.KEYUP :
-					if event.key == pygame.K_LEFT :
-						moveLeft = False
-					if event.key == pygame.K_RIGHT :
-						moveRight = False
-
-
+                if estLancee(vX,vY) == True:
+                        if balleX > raquetteX :
+                                dx = 1
+                        if balleX < raquetteX :
+                                dx = -1
 		window.fill(background)
 		displayBriques()
 		displayLifes(40,0,life)
@@ -149,7 +139,7 @@ def main() :
 								game_over = True
 		if win() :
 			continuer = True
-			displayMessage("Vous avez gagné !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
+			displayMessage("Vous avez gagne !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
 			while continuer:
 				for event in pygame.event.get():
 					if event.type == pygame.QUIT:
@@ -267,7 +257,7 @@ def accueil() :
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
 		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-600)
-		displayMessageDeux("Jeu développé par PEDICONE Doucelin - GROLLIER Théo - BEN MOUSSA Aurian", 20, windowW/2+150, windowH-770)
+		displayMessageDeux("Jeu developpe par PEDICONE Doucelin - GROLLIER Theo - BEN MOUSSA Aurian", 20, windowW/2+150, windowH-770)
 		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-530)
 		displayMessage("[<-] pour deplacer la raquette a gauche et [->] pour la deplacer a droite",25,windowW/2+150,windowH-350)
 		pygame.display.flip()
