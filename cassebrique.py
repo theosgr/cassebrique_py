@@ -14,6 +14,7 @@ windowW = 500
 lifeImg = pygame.image.load('img/coeurVie.png')
 touchingLowerCase = True
 balle = pygame.image.load('balles/balle1.png')
+briqueimg = pygame.image.load('briques/brique1.png')
 balleW = 18
 balleH = 16
 life = 0
@@ -22,8 +23,8 @@ raquetteW = 204
 raquetteH = 24
 estLancee = False
 brique = pygame.image.load('briques/brique6.png')
-briqueW = 70
-briqueH = 30
+briqueW = 124
+briqueH = 36
 briques = []
 background = (113,177,227)
 black = (0,0,0)
@@ -47,14 +48,14 @@ def main() :
 	briqueX = 100 #Position de depart d'une brique qu'on implemente apres dans une boucle pour toutes les afficher
 	briqueY = 50
 	angle = 0
-	balleX = 392
-	balleY = 466 - raquetteH
+	balleX = raquetteX
+	balleY = 473 - raquetteH
 	game_over = False
 	moveLeft = False
 	moveRight = False
 	dx = 0
 	#global life | je ne pense pas que le global ici soit necessaire
-        
+
 	while not game_over :
 		for event in pygame.event.get() :
 			if event.type == pygame.QUIT:
@@ -88,7 +89,7 @@ def main() :
 		displayLifes(40,0,life)
 		displayBalle(balleX, balleY)
 		displayRaquette(raquetteX,raquetteY)
-		
+
 
 
 
@@ -110,19 +111,22 @@ def main() :
 			if balleY <= 0:
 				vY = -vY
 			#La balle touche la raquette
-			if balleY == 468 - raquetteH and balleX >= raquetteX - raquetteW/2 and balleX <= raquetteX + raquetteW/2 :
+			if balleY == 475 - raquetteH and balleX >= raquetteX - raquetteW/2 and balleX <= raquetteX + raquetteW/2 :
 				vY = -vY
 
                         #La balle touche une brique
-			numeroBrique = 0
-			for i in lesBriques :
-				if balleX-balleW/2 > i[0]-briqueW/2 and balleX+balleW/2 < i[0] + briqueW/2 and (balleY-balleH/2 == i[1]+briqueH/2 or balleY+balleH/2 == i[1]-briqueH/2) :
+			l = 0
+			while l < len(lesBriques) :
+				i = lesBriques[l]
+				if balleX+balleW/2 > i[0]-briqueW/2 and balleX-balleW/2 < i[0] + briqueW/2 and (balleY-balleH/2 == i[1]+briqueH/2 or balleY+balleH/2 == i[1]-briqueH/2) :
 					vY = -vY
-					del lesBriques[numeroBrique]
-				if balleY-balleH/2 > i[1]-briqueH/2 and balleY+balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
+					del lesBriques[l]
+					l = len(lesBriques)
+				if balleY+balleH/2 > i[1]-briqueH/2 and balleY-balleH/2 < i[1]+briqueH/2 and (balleX-balleW/2 == i[0]+briqueW/2 or balleX+balleW/2 == i[0]-briqueW/2) :
 					vX = -vX
-					del lesBriques[numeroBrique]
-				numeroBrique = numeroBrique + 1
+					del lesBriques[l]
+					l = len(lesBriques)
+				l+=1
 
 			balleX += vX
 			balleY += vY
@@ -149,7 +153,7 @@ def main() :
 								game_over = True
 		if win() :
 			continuer = True
-			displayMessage("Vous avez gagné !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
+			displayMessage("Vous avez gagne !! Appuyez sur espace pour continuer", 30, windowW/2+150,windowH/2)
 			while continuer:
 				for event in pygame.event.get():
 					if event.type == pygame.QUIT:
@@ -184,9 +188,11 @@ def displayRaquette(x,y) :
 
 #fonction affichant la balle
 def displayBalle(x,y) :
-	window.blit(balle,(x,y))
-
-#fonction determinant si la balle touche le bord bas de l'ecran 
+	img = balle
+	displayRect = img.get_rect()
+	displayRect.center = (x,y)
+	window.blit(img,displayRect)
+#fonction determinant si la balle touche le bord bas de l'ecran
 def isOver(by) :
 	touchingLowerCase = by > 500
 	return touchingLowerCase
@@ -247,9 +253,11 @@ def playAgain() :
 
 #fonction permettant d'afficher les briques
 def displayBriques() :
+	img = briqueimg
+	displayRect = img.get_rect()
         for i in lesBriques :
-                pygame.draw.rect(window,black,[i[0],i[1],briqueW,briqueH])
-		
+				displayRect.center = (i[0],i[1])
+				window.blit(img,displayRect)
 
 #fonction contenant les composants de la page d'accueil du jeu
 def accueil() :
@@ -258,8 +266,8 @@ def accueil() :
 	life = 2
 	global lesBriques
 	lesBriques = []
-	listei = (40,75,110,145)
-	listej = (40,115,190,265)
+	listei = (80,120,160,200)
+	listej = (170,300,430,560)
 	for i in listei:
                 for j in listej:
                         lesBriques.append([j,i])
@@ -267,7 +275,7 @@ def accueil() :
 	while continuer:
 		windowAccueil.blit(backgroundAcc,(0,0))
 		displayTitleMessage("Jeu du casse brique", 60, windowW/2+150, windowH-600)
-		displayMessageDeux("Jeu développé par PEDICONE Doucelin - GROLLIER Théo - BEN MOUSSA Aurian", 20, windowW/2+150, windowH-770)
+		displayMessageDeux("Jeu developpe par PEDICONE Doucelin - GROLLIER Theo - BEN MOUSSA Aurian", 20, windowW/2+150, windowH-770)
 		displayMessage("Appuyez sur espace pour lancer la partie", 30, windowW/2+150,windowH-530)
 		displayMessage("[<-] pour deplacer la raquette a gauche et [->] pour la deplacer a droite",25,windowW/2+150,windowH-350)
 		pygame.display.flip()
